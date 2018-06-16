@@ -1,9 +1,10 @@
 import time
 import sys
+sys.path.append('../')
 from util import log
 from config import config
 import os
-sys.path.append('../')
+
 from spider import m_lagou_spider
 
 import requests
