@@ -16,7 +16,11 @@ python3 -m pip install -r requirements.txt
 
 运行spider下py文件，信息存储于Excel中.    ( cd ***/spider/)
 
-1. 运行 m_lagou_spider.py文件，来获取工作数据并生成Excel文件 (python3 m_lagou_spider.py)
+1. 运行 m_lagou_spider.py文件，来获取工作数据并生成Excel文件
+ 
+ - pip install util
+ - python3 m_lagou_spider.py
+
 2. 运行lagou_company_spider.py文件，获取公司详细信息 (python3 lagou_company_spider.py)
 3. 运行jobdetail_spider.py文件，获取职位详细信息 (python3 jobdetail_spider.py)
 
