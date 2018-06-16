@@ -1,11 +1,12 @@
 
 import logging
 import os
-
+import sys
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
+sys.path.append('../')
 from config.config import TIME_SLEEP
 
 from util.excel_helper import mkdirs_if_not_exists

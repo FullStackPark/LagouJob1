@@ -1,9 +1,9 @@
 import time
-
+import sys
 import requests
 from pymongo import MongoClient
 import pandas as pd
-
+sys.path.append('../')
 from spider.m_lagou_spider import get_cookies
 from util import log
 from config import config

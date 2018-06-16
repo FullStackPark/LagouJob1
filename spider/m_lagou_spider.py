@@ -11,6 +11,8 @@ import time
 
 import requests
 
+sys.path.append('../')
+
 from util.file_reader import parse_job_xml
 
 # 将模块路径加到当前模块扫描的路径里
