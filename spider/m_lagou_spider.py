@@ -135,17 +135,17 @@ def get_max_pageNo(positionName):
     # 上面代码执行结束之后，response-响应里面就包含了，我们需要的东西
 
     print("Getting data from %s successfully~" % positionName + request_url)
+    
+
     if response.status_code == 200:
         max_page_no = int(int(response.json()['content']['data']['page']['totalCount']) / 15 + 1)
-
         return max_page_no
+
     elif response.status_code == 403:
         log.error('request is forbidden by the server...')
-
         return 0
     else:
         log.error(response.status_code)
-
         return 0
 
 # 爬取职位信息，将内容保存在当前目录的data文件夹下
@@ -159,6 +159,13 @@ if __name__ == '__main__':
     for job in craw_job_list:
         # 创建joblist对象
         joblist = crawl_jobs(job)
+        # 上一行的 joblist 里面就包含了所有页的所有的职位的信息
+
+
+
+
+
+
         col = [
             u'职位编码',
             u'职位名称',
@@ -172,4 +179,5 @@ if __name__ == '__main__':
         df = pd.DataFrame(joblist, columns=col)
         path = "./data/"
         # 文件保存路径
+        # 
         df.to_excel(path + job + ".xlsx", sheet_name=job, index=False)
