@@ -55,7 +55,7 @@ def get_mean(numstring):
     else:
         return float(numstring.replace('k', '').strip())
 
-
+# 如果文件夹不存在或者不是一个文件夹，就创建一个文件夹
 def mkdirs_if_not_exists(directory_):
     """create a new folder if it does not exist"""
     if not os.path.exists(directory_) or not os.path.isdir(directory_):

@@ -1,23 +1,40 @@
+"""
+职位详情的爬虫页面
+"""
 
+# -*- coding: utf-8 -*-
+# !/usr/bin/env python
+
+# 日志
 import logging
+# 系统
 import os
 import sys
+# 请求
 import requests
+# 解析网页
 from bs4 import BeautifulSoup
+# numpy python，pandas numpy 
 import pandas as pd
+# 时间
 import time
+# 追加系统的 path
 sys.path.append('../')
+# 导入系统变量
 from config.config import TIME_SLEEP
 
 from util.excel_helper import mkdirs_if_not_exists
 
+# 定义职位详情放置的文件夹
 JOB_DETAIL_DIR = './data/'
-
+# fatal(critical)，error，info，waring，debug
 logging.basicConfig(format="%(asctime)s-%(name)s-%(levelname)s-%(message)s\t", level=logging.DEBUG)
 
 # 爬取工作详细信息
 def crawl_job_detail(positionId, positionName):
+    # https://m.lagou.com/jobs/4399609.html
     request_url = 'https://m.lagou.com/jobs/' + str(positionId) + '.html'
+    # 固定请求头
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Encoding': 'gzip, deflate, sdch',
@@ -28,18 +45,23 @@ def crawl_job_detail(positionId, positionName):
     }
 
     response = requests.get(request_url, headers=headers, timeout=10)
+
     if response.status_code == 200:
+
         soup = BeautifulSoup(response.text, 'html5lib')
 
         items = soup.find('div', class_='items')
+
         jobnature = items.find('span', class_='item jobnature').span.text.strip()
         workyear = items.find('span', class_='item workyear').span.text.strip()
         education = items.find('span', class_='item education').span.text.strip()
+
+
         jd = soup.find_all('div', class_='content')[0].get_text().strip().replace('\n', '').replace('&nbps;', '')  # jd
 
-        
         #　休眠２s
         time.sleep(TIME_SLEEP)
+
     elif response.status_code == 403:
         logging.error('request is forbidden by the server...')
     else:
@@ -65,11 +87,15 @@ def write_job_details_to_txt(positionId, text, parent_dir_name):
 # 保存职位详细信息
 if __name__ == '__main__':
     for excel_file in os.listdir(JOB_DETAIL_DIR):
+        # ./data/图像处理.xlsx
         df = pd.read_excel(os.path.join(JOB_DETAIL_DIR, excel_file), index_col=False)
-
+        # 创建一个列表    
         jd_item_list = list()
+        # len 取长度，range 范围，包头，不包腚
         for _ in range(len(df)):
+            # 4399609
             positionId = df['职位编码'].tolist()[_]
+            # 图像处理.xlsx    -》 图像处理
             positionName = excel_file.replace('.xlsx', '')
             try:
                 jd_item = crawl_job_detail(positionId, positionName)
@@ -88,4 +114,5 @@ if __name__ == '__main__':
         df = pd.DataFrame(jd_item_list, columns=col)
         # 保存路径和文件名
         path = "./data/"
+        # 图像处理-JD.xlsx
         df.to_excel(path + positionName + "-JD.xlsx", sheet_name=positionName, index=False, encoding='UTF-8')
