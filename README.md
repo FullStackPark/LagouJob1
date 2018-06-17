@@ -8,6 +8,12 @@
 
 ### 2. 安装支持
 
+> 注意，以下说的*python3*实际上是在我本人的电脑上的运行版本，如果你可以确认你的电脑上的
+> 版本是Python3的话，你也可以使用 python 的方法来运行
+> 
+> 查看Python 版本的方法 *python -V*
+> 
+
 1. 安装第三方库
 
 python3 -m pip install -r requirements.txt
